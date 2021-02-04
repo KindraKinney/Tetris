@@ -7,6 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let nextRandom = 0;
     let timerId;
     let score = 0;
+    const colors = [
+        'orange',
+        'red',
+        'purple',
+        'green',
+        'blue'
+    ]
    
 
     // Tetrominoes
@@ -61,7 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       function draw() {
           current.forEach(index => { 
-              squares[currentPosition + index].classList.add('tetromino')
+              squares[currentPosition + index].classList.add('tetromino');
+              squares[currentPosition + index].style.backgroundColor = colors[random];
           })
       }
    
@@ -70,7 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
       //undraw the Tetromino 
       function undraw() {
           current.forEach(index => {
-              squares[currentPosition + index].classList.remove('tetromino')
+              squares[currentPosition + index].classList.remove('tetromino');
+              squares[currentPosition + index].style.backgroundColor = '';
           })
       }
 //make the tetromino move down every second 
@@ -166,15 +175,18 @@ const upNextTetrominoes = [
     [1,displayWidth+1, displayWidth*2+1, displayWidth*3+1] //iTetromino
 ]
 
-//display the hape in the mini-grid
+//display the shape in the mini-grid
 function displayShape() {
+    //remove any trace of a tetromino form the entire grid
     displaySquares.forEach(square => {
-        square.classList.remove('tetromino');
+      square.classList.remove('tetromino');
+      square.style.backgroundColor = '';
     })
     upNextTetrominoes[nextRandom].forEach( index => {
-        displaySquares[displayIndex + index].classList.add('tetromino')
-    });
-}
+      displaySquares[displayIndex + index].classList.add('tetromino');
+      displaySquares[displayIndex + index].style.backgroundColor = colors[nextRandom];
+    })
+  }
 
 //add functionaility to the button 
 startBtn.addEventListener('click', () => {
@@ -199,6 +211,8 @@ function addScore() {
             scoreDisplay.innerHTML = score;
             row.forEach(index => {
                 squares[index].classList.remove('taken');
+                squares[index].classList.remove('tetromino');
+                squares[index].style.bacgroundColor = '';
             })
             const squaresRemoved = squares.splice(i, width);
             squares = squaresRemoved.concat(squares);
