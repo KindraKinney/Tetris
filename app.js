@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let nextRandom = 0;
     let timerId;
     let score = 0;
+   
 
     // Tetrominoes
     const lTetromino = [
@@ -112,6 +113,7 @@ function freeze() {
         draw();
         displayShape();
         addScore();
+        gameOver();
     }
 }
   //move the tetromino left, unless is at the edge or there is a blockage
@@ -182,7 +184,7 @@ startBtn.addEventListener('click', () => {
     } else {
         draw();
         timerId = setInterval(moveDown, 1000);
-        nextRandom = Math.floor(Math.random()*theTertrominoes.length)
+        nextRandom = Math.floor(Math.random()*theTetrominoes.length)
         displayShape();
     }
 })
@@ -201,11 +203,17 @@ function addScore() {
             const squaresRemoved = squares.splice(i, width);
             squares = squaresRemoved.concat(squares);
             squares.forEach(cell => grid.appendChild(cell));
-
         }
     } 
 }
 
+//game over 
+function gameOver() { 
+    if(current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
+        scoreDisplay.innerHTML= 'end';
+        clearInterval(timerId);
+    }
+}
 
 
 });
