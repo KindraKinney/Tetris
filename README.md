@@ -19,3 +19,4 @@ https://kindrakinney.github.io/Tetris/
 * Add own styling
 * Increase the high score 
 * Save high scores
+* Rotate functionality of the shapes
